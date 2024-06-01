@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom QR Code Generator</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #2C2C2C; /* Charcoal */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background: #4A2C2A; /* Dark Sienna */
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            color: #D3A5A3; /* Pale Red Viole */
+            max-width: 400px;
+            width: 100%;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #FF6F61; /* Pale Red Viole */
+        }
+
+        .form-group label {
+            font-weight: bold;
+            color: #D3A5A3; /* Pale Red Viole */
+        }
+
+        .form-control {
+            background-color: #3C3C3C; /* Charcoal */
+            color: #FF6F61; /* Pale Red Viole */
+            border: 1px solid #FF6F61;
+        }
+
+        .form-control::placeholder {
+            color: #D3A5A3; /* Pale Red Viole */
+        }
+
+        .btn-primary {
+            background-color: #FF6F61; /* Pale Red Viole */
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #D35B52; /* Darker Pale Red Viole */
+        }
+
+        #qrcode {
+            margin-top: 20px;
+        }
+
+        #download-btn {
+            display: none;
+            margin-top: 10px;
+            background-color: #FF6F61; /* Pale Red Viole */
+            border: none;
+        }
+
+        #download-btn:hover {
+            background-color: #D35B52; /* Darker Pale Red Viole */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Custom QR Code Generator</h1>
+        <form>
+            <div class="form-group">
+                <label for="text-input">Text/URL:</label>
+                <input type="text" class="form-control" id="text-input" placeholder="Enter text or URL">
+            </div>
+            <div class="form-group">
+                <label for="color-input">Foreground Color:</label>
+                <input type="color" class="form-control" id="color-input" value="#000000">
+            </div>
+            <div class="form-group">
+                <label for="bgcolor-input">Background Color:</label>
+                <input type="color" class="form-control" id="bgcolor-input" value="#ffffff">
+            </div>
+            <div class="form-group">
+                <label for="logo-input">Logo:</label>
+                <input type="file" class="form-control" id="logo-input" accept="image/*">
+            </div>
+            <button type="button" class="btn btn-primary btn-block" id="generate-btn">Generate QR Code</button>
+        </form>
+        <div id="qrcode"></div>
+        <button class="btn btn-primary btn-block" id="download-btn">Download QR Code</button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script>
+        document.getElementById('generate-btn').addEventListener('click', generateQRCode);
+        document.getElementById('download-btn').addEventListener('click', downloadQRCode);
+
+        function generateQRCode() {
+            const text = document.getElementById('text-input').value;
+            const color = document.getElementById('color-input').value;
+            const bgColor = document.getElementById('bgcolor-input').value;
+            const logoInput = document.getElementById('logo-input');
+
+            const qrcodeContainer = document.getElementById('qrcode');
+            qrcodeContainer.innerHTML = '';
+
+            if (!text) {
+                alert('Please enter text or URL');
+                return;
+            }
+
+            const qrCode = new QRCode(qrcodeContainer, {
+                text: text,
+                width: 200,
+                height: 200,
+                colorDark: color,
+                colorLight: bgColor,
+                correctLevel: QRCode.CorrectLevel.H
+            });
+
+            if (logoInput.files && logoInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const img = new Image();
+                    img.src = e.target.result;
+                    img.onload = function () {
+                        const canvas = qrcodeContainer.querySelector('canvas');
+                        const ctx = canvas.getContext('2d');
+                        const logoSize = canvas.width / 5;
+                        ctx.drawImage(img, (canvas.width - logoSize) / 2, (canvas.height - logoSize) / 2, logoSize, logoSize);
+                    };
+                };
+                reader.readAsDataURL(logoInput.files[0]);
+            }
+
+            document.getElementById('download-btn').style.display = 'block';
+        }
+
+        function downloadQRCode() {
+            const canvas = document.querySelector('#qrcode canvas');
+            const link = document.createElement('a');
+            link.href = canvas.toDataURL();
+            link.download = 'qrcode.png';
+            link.click();
+        }
+    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
