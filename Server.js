@@ -1,15 +1,19 @@
-// index.js
+const http = require('http');
+const fs = require('fs');
+const path = require('path');
 
-const express = require('express');
-const path = require('insex.html');
-
-const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Serve static files from the 'public' directory
-app.use(express.static(path.join(__dirname, 'public')));
-
-// Start the server
-app.listen(PORT, () => {
+http.createServer((req, res) => {
+    fs.readFile(path.join(__dirname, 'insex.html'), (err, content) => {
+        if (err) {
+            res.writeHead(500);
+            res.end('Server Error');
+        } else {
+            res.writeHead(200, { 'Content-Type': 'text/html' });
+            res.end(content, 'utf8');
+        }
+    });
+}).listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
