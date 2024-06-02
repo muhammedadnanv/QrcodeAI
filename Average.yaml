@@ -1,0 +1,23 @@
+model:
+  name: QR Code Maker
+  description: |
+    A Progressive Web App (PWA) that allows users to generate custom QR codes for URLs, text, and more. It provides features for customizing QR code colors and designs, as well as the ability to download generated QR codes for easy sharing.
+  features:
+    - Generate QR codes for URLs, text, and more.
+    - Customize QR code colors and designs.
+    - Download QR codes for easy sharing.
+    - Works seamlessly on mobile and desktop.
+  technologies:
+    - HTML
+    - CSS
+    - JavaScript
+    - Progressive Web App (PWA)
+  frameworks_libraries:
+    - None (Vanilla JavaScript)
+  deployment_platform:
+    - Web (Hosted as a PWA)
+  contributors:
+    - name: Muhammed Adnan
+      role: Developer
+    # Add more contributors as needed
+  license: MIT
