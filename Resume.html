@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Information QR Code Generator</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    /* Custom black and white styles */
+    body {
+      background-color: #ffffff;
+      color: #000000;
+    }
+    .container {
+      max-width: 600px;
+    }
+    .form-group label {
+      font-weight: bold;
+    }
+    .btn-primary {
+      background-color: #000000;
+      border-color: #000000;
+    }
+    .btn-primary:hover {
+      background-color: #000000;
+      border-color: #000000;
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-5">
+    <h1 class="text-center mb-4"><i class="fas fa-qrcode"></i> Product Information QR Code Generator</h1>
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <form id="productForm">
+          <div class="form-group">
+            <label for="productName"><i class="fas fa-tag"></i> Product Name:</label>
+            <input type="text" class="form-control" id="productName" required>
+          </div>
+          <div class="form-group">
+            <label for="productPrice"><i class="fas fa-dollar-sign"></i> Product Price:</label>
+            <input type="number" class="form-control" id="productPrice" min="0" step="0.01" required>
+          </div>
+          <div class="form-group">
+            <label for="pkgDate"><i class="far fa-calendar-alt"></i> Packaging Date:</label>
+            <input type="date" class="form-control" id="pkgDate" required>
+          </div>
+          <div class="form-group">
+            <label for="expDate"><i class="far fa-calendar-times"></i> Expiration Date:</label>
+            <input type="date" class="form-control" id="expDate" required>
+          </div>
+          <div class="form-group">
+            <label for="companyName"><i class="fas fa-building"></i> Company Name:</label>
+            <input type="text" class="form-control" id="companyName" required>
+          </div>
+          <div class="form-group">
+            <label for="saleName"><i class="fas fa-tags"></i> Sale Name:</label>
+            <input type="text" class="form-control" id="saleName" required>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block"><i class="fas fa-qrcode"></i> Generate QR Code</button>
+        </form>
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-md-6 offset-md-3 text-center">
+        <canvas id="qrCodeCanvas"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <!-- QR Code Generator Library -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcode"></script>
+  <!-- Font Awesome -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+  <script>
+    // Function to generate QR Code
+    function generateQRCode(productInfo) {
+      // Generate QR Code
+      const qrCodeCanvas = document.getElementById('qrCodeCanvas');
+      qrCodeCanvas.innerHTML = ''; // Clear previous QR code
+      QRCode.toCanvas(qrCodeCanvas, productInfo, function (error) {
+        if (error) console.error(error);
+        console.log('QR Code generated successfully');
+      });
+    }
+
+    // Event listener for form submission
+    document.getElementById('productForm').addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent form submission
+      
+      // Get form values
+      const productName = document.getElementById('productName').value;
+      const productPrice = document.getElementById('productPrice').value;
+      const pkgDate = document.getElementById('pkgDate').value;
+      const expDate = document.getElementById('expDate').value;
+      const companyName = document.getElementById('companyName').value;
+      const saleName = document.getElementById('saleName').value;
+      
+      // Concatenate product information into a string
+      const productInfo = `Product Name: ${productName}\nPrice: $${productPrice}\nPackaging Date: ${pkgDate}\nExpiration Date: ${expDate}\nCompany Name: ${companyName}\nSale Name: ${saleName}`;
+      
+      // Generate QR code
+      generateQRCode(productInfo);
+    });
+  </script>
+</body>
+</html>
