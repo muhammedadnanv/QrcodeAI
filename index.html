@@ -3,80 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Custom QR Code Generator</title>
+    <title>Brutalist QR Code Generator</title>
     <link rel="icon" href="5050.png" type="image/x-icon">
     <link rel="manifest" href="manifest.json">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            background-color: #2C2C2C; /* Charcoal */
+            background-color: #f2f2f2;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
+            color: #000;
+            font-family: 'Courier New', Courier, monospace;
         }
 
         .container {
-            background: #4A2C2A; /* Dark Sienna */
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            text-align: center;
-            color: #D3A5A3; /* Pale Red Viole */
-            max-width: 400px;
+            background: #ffffff;
+            padding: 40px;
+            border: 3px solid #000;
+            text-align: left;
+            max-width: 600px;
             width: 100%;
         }
 
         h1 {
             margin-bottom: 20px;
-            font-size: 24px;
-            color: #FF6F61; /* Pale Red Viole */
+            font-size: 36px;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: #ff0000;
         }
 
         .form-group label {
             font-weight: bold;
-            color: #D3A5A3; /* Pale Red Viole */
+            text-transform: uppercase;
+            font-size: 16px;
+            margin-bottom: 5px;
+            display: block;
         }
 
         .form-control {
-            background-color: #3C3C3C; /* Charcoal */
-            color: #FF6F61; /* Pale Red Viole */
-            border: 1px solid #FF6F61;
+            background-color: #fff;
+            color: #000;
+            border: 2px solid #000;
+            border-radius: 0;
+            font-size: 16px;
         }
 
         .form-control::placeholder {
-            color: #D3A5A3; /* Pale Red Viole */
+            color: #000;
         }
 
         .btn-primary {
-            background-color: #FF6F61; /* Pale Red Viole */
-            border: none;
-        }
-
-        .btn-primary:hover {
-            background-color: #D35B52; /* Darker Pale Red Viole */
+            background-color: #000;
+            color: #fff;
+            border: 2px solid #000;
+            border-radius: 0;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-top: 20px;
         }
 
         #qrcode {
-            margin-top: 20px;
+            margin-top: 30px;
+            text-align: center;
         }
 
         #download-btn {
             display: none;
-            margin-top: 10px;
-            background-color: #FF6F61; /* Pale Red Viole */
-            border: none;
+            background-color: #000;
+            color: #fff;
+            border: 2px solid #000;
+            border-radius: 0;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-top: 20px;
         }
 
-        #download-btn:hover {
-            background-color: #D35B52; /* Darker Pale Red Viole */
+        .buy-coffee {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .buy-coffee img {
+            transition: transform 0.3s;
+            border-radius: 0;
+            border: 2px solid #000;
+            padding: 5px;
+        }
+
+        .buy-coffee img:hover {
+            transform: scale(1.1);
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #000;
+            color: #fff;
+            padding: 20px;
+            border: 2px solid #ff0000;
+            display: none;
+            z-index: 1000;
+        }
+
+        .notification.show {
+            display: block;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Custom QR Code Generator</h1>
+        <h1>QR Code Generator</h1>
         <form>
             <div class="form-group">
                 <label for="text-input">Text/URL:</label>
@@ -94,11 +139,18 @@
                 <label for="logo-input">Logo:</label>
                 <input type="file" class="form-control" id="logo-input" accept="image/*">
             </div>
-            <button type="button" class="btn btn-primary btn-block" id="generate-btn">Generate QR Code</button>
+            <button type="button" class="btn btn-primary" id="generate-btn">Generate QR Code</button>
         </form>
         <div id="qrcode"></div>
-        <button class="btn btn-primary btn-block" id="download-btn">Download QR Code</button>
+        <button class="btn btn-primary" id="download-btn">Download QR Code</button>
+        <div class="buy-coffee">
+            <a href="https://www.buymeacoffee.com/muhammedadan" target="_blank">
+                <img src="https://img.buymeacoffee.com/button-api/?text=Buy Me a Coffee&emoji=☕&slug=muhammedadan&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=FFDD00" alt="Buy Me a Coffee" onclick="showNotification()">
+            </a>
+        </div>
     </div>
+
+    <div id="notification" class="notification">Someone donated $500!</div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script>
@@ -153,6 +205,14 @@
             link.download = 'qrcode.png';
             link.click();
         }
+
+        function showNotification() {
+            const notification = document.getElementById('notification');
+            notification.classList.add('show');
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
     </script>
     <script>
         if ('serviceWorker' in navigator) {
@@ -166,9 +226,8 @@
             });
         }
     </script>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <a href="https://www.buymeacoffee.com/muhammedadan"><img src="https://img.buymeacoffee.com/button-api/?text=Donate Me&emoji=🤗&slug=muhammedadan&button_colour=f07070&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=FFDD00" /></a>
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
 </body>
 </html>
