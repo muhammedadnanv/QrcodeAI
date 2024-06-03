@@ -3,129 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Brutalist QR Code Generator</title>
+    <title>QR Code Generator</title>
     <link rel="icon" href="5050.png" type="image/x-icon">
-    <link rel="manifest" href="manifest.json">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
     <style>
         body {
+            font-family: Arial, sans-serif;
             background-color: #f2f2f2;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
             color: #000;
-            font-family: 'Courier New', Courier, monospace;
         }
 
         .container {
-            background: #ffffff;
-            padding: 40px;
-            border: 3px solid #000;
-            text-align: left;
-            max-width: 600px;
-            width: 100%;
+            margin-top: 50px;
+            text-align: center;
+        }
+
+        .illustration {
+            max-width: 500px;
+            margin: 0 auto;
         }
 
         h1 {
-            margin-bottom: 20px;
             font-size: 36px;
             font-weight: bold;
-            text-transform: uppercase;
-            color: #ff0000;
-        }
-
-        .form-group label {
-            font-weight: bold;
-            text-transform: uppercase;
-            font-size: 16px;
-            margin-bottom: 5px;
-            display: block;
-        }
-
-        .form-control {
-            background-color: #fff;
+            margin-bottom: 20px;
             color: #000;
-            border: 2px solid #000;
-            border-radius: 0;
-            font-size: 16px;
         }
 
-        .form-control::placeholder {
+        p {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 20px;
             color: #000;
         }
 
         .btn-primary {
-            background-color: #000;
-            color: #fff;
-            border: 2px solid #000;
-            border-radius: 0;
+            background-color: #007bff;
+            border-color: #007bff;
             padding: 10px 20px;
-            font-size: 16px;
+            font-size: 18px;
             font-weight: bold;
             text-transform: uppercase;
-            margin-top: 20px;
         }
 
-        #qrcode {
-            margin-top: 30px;
-            text-align: center;
-        }
-
-        #download-btn {
-            display: none;
-            background-color: #000;
+        .dark-mode {
+            background-color: #333;
             color: #fff;
-            border: 2px solid #000;
-            border-radius: 0;
-            padding: 10px 20px;
-            font-size: 16px;
-            font-weight: bold;
-            text-transform: uppercase;
-            margin-top: 20px;
         }
 
-        .buy-coffee {
-            margin-top: 30px;
-            text-align: center;
+        .dark-mode .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
         }
 
-        .buy-coffee img {
-            transition: transform 0.3s;
-            border-radius: 0;
-            border: 2px solid #000;
-            padding: 5px;
-        }
-
-        .buy-coffee img:hover {
-            transform: scale(1.1);
-        }
-
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background-color: #000;
+        .dark-mode h1,
+        .dark-mode p {
             color: #fff;
-            padding: 20px;
-            border: 2px solid #ff0000;
-            display: none;
-            z-index: 1000;
-        }
-
-        .notification.show {
-            display: block;
         }
     </style>
 </head>
 <body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">QR Code Generator</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://github.com/yourusername/yourrepository">GitHub</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
     <div class="container">
-        <h1>QR Code Generator</h1>
+        <img src="404.png" alt="Illustration" class="illustration">
+        <h1>Welcome to QR Code Generator</h1>
+        <p>Generate QR codes easily with our tool. Enter your data and customize as needed.</p>
         <form>
             <div class="form-group">
-                <label for="text-input">Text/URL:</label>
-                <input type="text" class="form-control" id="text-input" placeholder="Enter text or URL">
+                <label for="github-url">GitHub URL:</label>
+                <input type="text" class="form-control" id="github-url" placeholder="Enter GitHub URL">
             </div>
             <div class="form-group">
                 <label for="color-input">Foreground Color:</label>
@@ -137,97 +104,28 @@
             </div>
             <div class="form-group">
                 <label for="logo-input">Logo:</label>
-                <input type="file" class="form-control" id="logo-input" accept="image/*">
+                <input type="file" class="form-control" id="logo-input" accept="image/svg+xml">
             </div>
             <button type="button" class="btn btn-primary" id="generate-btn">Generate QR Code</button>
         </form>
         <div id="qrcode"></div>
         <button class="btn btn-primary" id="download-btn">Download QR Code</button>
-        <div class="buy-coffee">
-            <a href="https://www.buymeacoffee.com/muhammedadan" target="_blank">
-                <img src="https://img.buymeacoffee.com/button-api/?text=Buy Me a Coffee&emoji=☕&slug=muhammedadan&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=FFDD00" alt="Buy Me a Coffee" onclick="showNotification()">
-            </a>
-        </div>
     </div>
-
-    <div id="notification" class="notification">Someone donated $500!</div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script>
-        document.getElementById('generate-btn').addEventListener('click', generateQRCode);
-        document.getElementById('download-btn').addEventListener('click', downloadQRCode);
-
-        function generateQRCode() {
-            const text = document.getElementById('text-input').value;
-            const color = document.getElementById('color-input').value;
-            const bgColor = document.getElementById('bgcolor-input').value;
-            const logoInput = document.getElementById('logo-input');
-
-            const qrcodeContainer = document.getElementById('qrcode');
-            qrcodeContainer.innerHTML = '';
-
-            if (!text) {
-                alert('Please enter text or URL');
-                return;
-            }
-
-            const qrCode = new QRCode(qrcodeContainer, {
-                text: text,
-                width: 200,
-                height: 200,
-                colorDark: color,
-                colorLight: bgColor,
-                correctLevel: QRCode.CorrectLevel.H
-            });
-
-            if (logoInput.files && logoInput.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    const img = new Image();
-                    img.src = e.target.result;
-                    img.onload = function () {
-                        const canvas = qrcodeContainer.querySelector('canvas');
-                        const ctx = canvas.getContext('2d');
-                        const logoSize = canvas.width / 5;
-                        ctx.drawImage(img, (canvas.width - logoSize) / 2, (canvas.height - logoSize) / 2, logoSize, logoSize);
-                    };
-                };
-                reader.readAsDataURL(logoInput.files[0]);
-            }
-
-            document.getElementById('download-btn').style.display = 'block';
-        }
-
-        function downloadQRCode() {
-            const canvas = document.querySelector('#qrcode canvas');
-            const link = document.createElement('a');
-            link.href = canvas.toDataURL();
-            link.download = 'qrcode.png';
-            link.click();
-        }
-
-        function showNotification() {
-            const notification = document.getElementById('notification');
-            notification.classList.add('show');
-            setTimeout(() => {
-                notification.classList.remove('show');
-            }, 3000);
-        }
+        // JavaScript for QR Code generation and other functionalities
+        document.getElementById('generate-btn').addEventListener('click', function() {
+            var qrText = document.getElementById('github-url').value; // GitHub URL
+            var qrOptions = {
+                text: qrText,
+                colorDark: document.getElementById('color-input').value,
+                colorLight: document.getElementById('bgcolor-input').value,
+                correctLevel: QRCode.CorrectLevel.H // Adjust error correction level if needed
+            };
+            new QRCode(document.getElementById('qrcode'), qrOptions);
+        });
     </script>
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/service-worker.js')
-                    .then(registration => {
-                        console.log('Service Worker registered with scope:', registration.scope);
-                    }, error => {
-                        console.log('Service Worker registration failed:', error);
-                    });
-            });
-        }
-    </script>
-    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
+    <script src=""></script>
 </body>
 </html>
