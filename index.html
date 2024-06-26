@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,12 +8,12 @@
     <link rel="icon" href="5050.png" type="image/x-icon">
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #000; /* Background color black */
-            color: #fff; /* Text color white */
+            background-color: #000;
+            color: #fff;
         }
 
         .container {
@@ -29,61 +30,67 @@
             font-size: 36px;
             font-weight: bold;
             margin-bottom: 20px;
-            color: #fff;
         }
 
         p {
             font-size: 18px;
             line-height: 1.6;
             margin-bottom: 20px;
-            color: #fff;
         }
 
         .btn-primary {
-            background-color: #fff; /* Button background white */
-            border-color: #fff; /* Button border white */
+            background-color: #fff;
+            border-color: #fff;
             padding: 10px 20px;
             font-size: 18px;
             font-weight: bold;
             text-transform: uppercase;
-            color: #000; /* Button text color black */
+            color: #000;
         }
 
         .navbar-brand {
             font-size: 24px;
             font-weight: bold;
-            color: #fff !important; /* Navbar text color white */
+            color: #fff !important;
         }
 
-        .navbar-dark .navbar-toggler-icon {
-            color: #fff; /* Navbar toggle icon color white */
-        }
-
+        .navbar-dark .navbar-toggler-icon,
         .navbar-dark .navbar-nav .nav-link {
-            color: #fff !important; /* Navbar links color white */
+            color: #fff !important;
         }
     </style>
 </head>
+
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="insex.html"><i class="fas fa-qrcode"></i> QR Code Generator</a>
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-qrcode"></i> QR Code Generator
+            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="Resume.html"><i class="fas fa-address-card"></i> Resqcode</a>
+                        <a class="nav-link" href="resume.html">
+                            <i class="fas fa-address-card"></i> Resume QR Code
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="contact.html"><i class="fas fa-business-time"></i> Business Qrcode</a>
+                        <a class="nav-link" href="contact.html">
+                            <i class="fas fa-business-time"></i> Business QR Code
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="https://github.com/muhammedadnanv/QrcodeAI.git"><i class="fab fa-github"></i> GitHub</a>
+                        <a class="nav-link" href="https://github.com/muhammedadnanv/QrcodeAI.git">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="https://buymeacoffee.com/muhammedadan"><i class="fas fa-donate"></i> Donate us</a>
+                        <a class="nav-link" href="https://buymeacoffee.com/muhammedadan">
+                            <i class="fas fa-donate"></i> Donate
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -95,42 +102,42 @@
         <h1>Welcome to QR Code Generator</h1>
         <p>Generate QR codes easily with our tool. Enter your data and customize as needed.</p>
         <form>
-            <div class="form-group">
+            <div class="form-group mb-3">
                 <label for="github-url">GitHub URL:</label>
                 <input type="text" class="form-control" id="github-url" placeholder="Enter GitHub URL">
             </div>
-            <div class="form-group">
+            <div class="form-group mb-3">
                 <label for="color-input">Foreground Color:</label>
                 <input type="color" class="form-control" id="color-input" value="#000000">
             </div>
-            <div class="form-group">
+            <div class="form-group mb-3">
                 <label for="bgcolor-input">Background Color:</label>
                 <input type="color" class="form-control" id="bgcolor-input" value="#ffffff">
             </div>
-            <div class="form-group">
+            <div class="form-group mb-3">
                 <label for="logo-input">Logo:</label>
                 <input type="file" class="form-control" id="logo-input" accept="image/svg+xml">
             </div>
             <button type="button" class="btn btn-primary" id="generate-btn">Generate QR Code</button>
         </form>
-        <div id="qrcode"></div>
+        <div id="qrcode" class="my-3"></div>
         <button class="btn btn-primary" id="download-btn">Download QR Code</button>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script>
-        // JavaScript for QR Code generation and other functionalities
-        document.getElementById('generate-btn').addEventListener('click', function() {
-            var qrText = document.getElementById('github-url').value; // GitHub URL
+        document.getElementById('generate-btn').addEventListener('click', function () {
+            var qrText = document.getElementById('github-url').value;
             var qrOptions = {
                 text: qrText,
                 colorDark: document.getElementById('color-input').value,
                 colorLight: document.getElementById('bgcolor-input').value,
-                correctLevel: QRCode.CorrectLevel.H // Adjust error correction level if needed
+                correctLevel: QRCode.CorrectLevel.H
             };
             new QRCode(document.getElementById('qrcode'), qrOptions);
         });
     </script>
     <script src="service-worker.js"></script>
 </body>
+
 </html>
